@@ -9,7 +9,7 @@ class TestDatabase:
         try:
             mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
             self._client = motor.motor_asyncio.AsyncIOMotorClient(mongo_url)
-            self._collection = self._client.files_db.Erika
+            self._collection = self._client.files_db.files
         except Exception as e:
             raise Exception("failed to init database because " + e)
 
