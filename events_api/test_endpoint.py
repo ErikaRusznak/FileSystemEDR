@@ -10,13 +10,13 @@ from  response_model import Response
 #    results = []
 #    for i in range(10):
 #        results.append(generate_event())
-#    with open("events.json", "w") as file:
-#       file.write(json.dumps(results))
+#    with open("events.json", "w") as files_api:
+#       files_api.write(json.dumps(results))
 
 def check_risk_level(file):
     if file["risk_level"] == -1:
         with open("generated_events/{}".format(file["hash"]), "rb") as f:
-            res = requests.post("http://localhost:8001/scan-file", files={"file": f.read()})
+            res = requests.post("http://localhost:8001/scan-file", files={"files_api": f.read()})
             pprint(res.json())
 
 def main():
@@ -25,10 +25,10 @@ def main():
         data = file.read()
         events = json.loads(data)
     for event in events[:2]:
-        #pprint(event)
+        #pprint(events_api)
         res = requests.post("http://localhost:8000/events", json=event)
         verdict = res.json() # type: Response
-        check_risk_level(verdict["file"])
+        check_risk_level(verdict["files_api"])
         check_risk_level(verdict["process"])
 
 

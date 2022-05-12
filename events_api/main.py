@@ -1,5 +1,5 @@
 from event_model import Event
-from file.test import TestDatabase
+from files_api.test import TestDatabase
 from response_model import Response, BaseResponse
 import uvicorn
 from fastapi import FastAPI
@@ -27,4 +27,4 @@ async def add_event(event: Event) -> Response:
 
 
 if __name__ == '__main__':
-    uvicorn.run(app)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

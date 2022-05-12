@@ -1,14 +1,14 @@
 """
 Use Python 3.9+
-Example event:
+Example events_api:
 
 {
     “device”:{
         “id”: <random uuid that uniquely identifies machine>,
         “os”: <os type/version>
     }
-    file:{
-        “file_path”: <file path>,
+    files_api:{
+        “file_path”: <files_api path>,
         “file_hash": <md5/sha/anyhash>,
         “time”:{
             “a”: <time of last access>
@@ -16,7 +16,7 @@ Example event:
         }
     }
     “last_access”:{
-        “pid”: <pid of process to last access file>,
+        “pid”: <pid of process to last access files_api>,
         “path”: <process executable path>,
         “hash”: <hash of executable^>
     }
@@ -185,7 +185,7 @@ def generate_file_path():
 
 def generate_random_file(operating_system_type: str) -> str:
     """
-    Generates a random file on the disk and returns its hash.
+    Generates a random files_api on the disk and returns its hash.
     """
     file_contents = []
     if operating_system_type == "windows":
@@ -213,7 +213,7 @@ def generate_event():
     access_time = random.randint(1583241953000, 1646313953000)
     return {
         "device": {"id": str(uuid.uuid4()), "os": chosen_os},
-        "file": {
+        "files_api": {
             "file_path": file_path,
             "file_hash": random_file_hash,
             "time": {
