@@ -25,6 +25,12 @@ app = FastAPI()
 async def root():
     return {'title': 'File System Edr'}
 
+
+# redis bloom filter:
+    # pentru chestii pe care iti zice true: este o sansa sa nu fie de fapt
+    # pentru chestii pe care iti zice fals: sigur nu exista
+
+
 # @app.get("/metrics")
 # async def metrics():
 #    return f"http_request_count_total {http_request_count_total}"
@@ -39,13 +45,12 @@ async def add_event(event: Event) -> Response:
     redis = Redis()
     risk = await redis.find_data(event.file.file_hash)
 
-    r = -1
     if risk is None:
-        risk = await db.find_data(some_key=event.file.file_hash)
-    if risk is not None:
-        r = risk['risk_level']
+        risk = await db.find_data(event.file.file_hash)
+        r = risk.get('risk_level', -1)
     else:
-        r = -1;
+        r = int(risk)
+    # kafka publish
 
     return Response(file=BaseResponse(hash=event.file.file_hash, risk_level=r),
                     process=BaseResponse(hash=event.last_access.hash, risk_level=r))
